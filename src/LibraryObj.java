@@ -1,11 +1,11 @@
-import java.time.*;
+import java.time.LocalDateTime;
 
 public class LibraryObj {
     protected int id;
-    private LocalDateTime dateCreated;
+    private final LocalDateTime dateCreated;
 
     LibraryObj() {
-        this.id = -1;
+        this.id = Integer.parseInt(null);
         this.dateCreated = LocalDateTime.now();
     }
 

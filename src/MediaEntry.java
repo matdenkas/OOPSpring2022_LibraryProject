@@ -4,7 +4,7 @@ public class MediaEntry extends LibraryObj {
 
     MediaEntry() {
         this.available = true;
-        this.isbn = "";
+        this.isbn = null;
     }
 
     MediaEntry(int id, String isbn){
