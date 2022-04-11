@@ -1,19 +1,20 @@
-public class OnSiteMedia extends MediaEntry {
+package DataClasses;
 
-    private final String location;
+public class OnlineMedia extends MediaEntry {
+    private final String link;
     private final MediaTypes type;
     private final String name;
 
-    OnSiteMedia(int id, String isbn, String location, MediaTypes type, String name) {
+    OnlineMedia(int id, String isbn, String link, MediaTypes type, String name) {
         super.id = id;
         super.isbn = isbn;
-        this.location = location;
+        this.link = link;
         this.type = type;
         this.name = name;
     }
 
-    public String getLocation() {
-        return location;
+    public String getLink() {
+        return link;
     }
 
     public MediaTypes getType() {
@@ -23,5 +24,4 @@ public class OnSiteMedia extends MediaEntry {
     public String getName() {
         return name;
     }
-
 }

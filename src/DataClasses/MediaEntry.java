@@ -1,3 +1,5 @@
+package DataClasses;
+
 public class MediaEntry extends LibraryObj {
     private boolean available;
     protected String isbn;

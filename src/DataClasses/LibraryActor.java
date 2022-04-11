@@ -1,3 +1,5 @@
+package DataClasses;
+
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.util.ArrayList;

@@ -1,3 +1,5 @@
+package DataClasses;
+
 import java.time.LocalDateTime;
 
 public class CheckOut {
