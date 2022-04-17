@@ -7,7 +7,7 @@ public class LibraryObj {
     private final LocalDateTime dateCreated;
 
     LibraryObj() {
-        this.id = Integer.parseInt(null);
+        this.id = -1;
         this.dateCreated = LocalDateTime.now();
     }
 

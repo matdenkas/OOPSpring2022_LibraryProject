@@ -7,13 +7,12 @@ public class LibraryClient extends LibraryActor {
     private int checkOutLimit;
     private double fineAmnt;
 
-    LibraryClient(int id, String name, String username, String password, String address, LocalDate dob, int checkOutLimit){
+    public LibraryClient(int id, String name, String username, String password, String address, int checkOutLimit){
         super.id = id;
         super.name = name;
         super.username = username;
         super.password = password;
         super.address = address;
-        super.dob = dob;
         this.checkOutLimit = checkOutLimit;
     }
 

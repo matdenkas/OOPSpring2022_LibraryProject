@@ -10,7 +10,6 @@ public class LibraryActor extends LibraryObj {
     protected String username;
     protected String password;
     protected String address;
-    protected LocalDate dob;
     private final ArrayList<CheckOut> checkOutEntries;
 
     LibraryActor(){
@@ -18,7 +17,6 @@ public class LibraryActor extends LibraryObj {
         this.username = null;
         this.password = null;
         this.address = null;
-        this.dob = null;
         this.checkOutEntries = new ArrayList<CheckOut>();
     }
 
@@ -30,6 +28,8 @@ public class LibraryActor extends LibraryObj {
     public String getName() {
         return name;
     }
+    public String getUsername() { return username; }
+    public String getPassword() {return password; }
 
     //TODO handle IllegalArgumentException when duedate is before now in GUI
     protected void addCheckOut(MediaEntry item, LocalDateTime dueDate) throws IllegalArgumentException {
