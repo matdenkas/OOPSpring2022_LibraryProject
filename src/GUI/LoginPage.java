@@ -5,13 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import AppDriver.ApplicationDriver;
-import DataClasses.LibraryActor;
-import DataClasses.LibraryEmployee;
 import DataControlers.UserAuthHandler;
 
 public class LoginPage extends JFrame {
-
-    private UserAuthHandler userAuthHandler;
 
     private JPanel userPanel;
         private JTextField userInput_header;
@@ -23,12 +19,9 @@ public class LoginPage extends JFrame {
 
     private JButton loginButton;
 
-    public LoginPage(UserAuthHandler uah) {
+    public LoginPage() {
         super("Login Page");
 
-        userAuthHandler = uah;
-
-        //this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);   // Handle the CLOSE button
         this.getContentPane().setBackground(Color.GRAY);
         Dimension fieldSize = new Dimension(200, 100);
@@ -83,7 +76,7 @@ public class LoginPage extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             switch (e.getActionCommand()) {
-                case "Clear" -> login();
+                case "Login" -> login();
             }
         }
     }

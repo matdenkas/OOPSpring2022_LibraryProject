@@ -16,6 +16,8 @@ import DataControlers.UserAuthHandler;
 import GUI.*;
 import DataClasses.*;
 
+import javax.swing.*;
+
 public class ApplicationDriver {
 
     private static UserAuthHandler userAuthHandler;
@@ -28,18 +30,17 @@ public class ApplicationDriver {
         userAuthHandler.addUser(le);
         userAuthHandler.addUser(lc);
 
-        loginPage = new LoginPage(userAuthHandler);
+        loginPage = new LoginPage();
         loginPage.setVisible(true);
     }
 
     public static void authTest(String user, String pass) {
-
-        LibraryActor test = userAuthHandler.testUser(user, pass);
-        if(test != null) {
+        LibraryActor testUser = userAuthHandler.testUser(user, pass);
+        if(testUser != null) {
             loginPage.setVisible(false);
             loginPage.dispose();
 
-            //TODO::Callnext page
+            MainPage.createAndShowGUI(testUser);
         }
     }
 }
