@@ -15,6 +15,8 @@ public class MediaEntry extends LibraryObj {
         this.isbn = isbn;
     }
 
+
+
     public void setAvailable(boolean available) {
         this.available = available;
     }

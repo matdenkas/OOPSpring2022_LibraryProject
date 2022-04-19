@@ -8,13 +8,14 @@ import javax.swing.*;
 
 public class MainPage implements ItemListener {
     JPanel cards; //a panel that uses CardLayout
-    final static String MEDIA_CARD = "Card with JButtons";
-    final static String USER_INFORMATION = "Card with JTextField";
+    final static String MEDIA_CARD = "Media Card";
+    final static String USER_INFORMATION = "User Information";
+    final static String LIBRARY_MANAGEMENT = "Library Media";
 
     public void addComponentToPane(Container pane, LibraryActor user) {
         //Put the JComboBox in a JPanel to get a nicer look.
         JPanel comboBoxPane = new JPanel(); //use FlowLayout
-        String[] comboBoxItems = {MEDIA_CARD, USER_INFORMATION };
+        String[] comboBoxItems = {MEDIA_CARD, USER_INFORMATION, LIBRARY_MANAGEMENT };
         JComboBox<String> cb = new JComboBox<>(comboBoxItems);
         cb.setEditable(false);
         cb.addItemListener(this);
@@ -45,6 +46,18 @@ public class MainPage implements ItemListener {
             c3_t3.setEditable(false);
             card2.add(c3_t3);
         cards.add(card2, USER_INFORMATION);
+
+        JPanel card3 = new JPanel();
+            Button c3_b1 = new Button();
+            c3_b1.setLabel("Check Out Media");
+            card3.add(c3_b1);
+            c3_b1.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                        CheckoutPage.createAndShowGUI(user);
+                }
+            });
+        cards.add(card3, LIBRARY_MANAGEMENT);
 
 
         pane.add(comboBoxPane, BorderLayout.PAGE_START);
