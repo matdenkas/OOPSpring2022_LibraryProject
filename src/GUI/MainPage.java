@@ -1,7 +1,6 @@
 package GUI;
 
 import DataClasses.LibraryActor;
-import DataClasses.MediaTypes;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -9,7 +8,7 @@ import javax.swing.*;
 
 public class MainPage implements ItemListener {
     JPanel cards; //a panel that uses CardLayout
-    final static String MEDIA_CARD = "Media Card";
+    final static String MEDIA_CARD = "Library Media";
     final static String USER_INFORMATION = "User Information";
 
     public void addComponentToPane(Container pane, LibraryActor user) {
@@ -24,10 +23,6 @@ public class MainPage implements ItemListener {
         cards = new JPanel(new CardLayout());
         //Create the "cards".
         JPanel card1 = new JPanel();
-            JPanel userInfo = new JPanel();
-            JLabel info = new JLabel();
-            info.setText("Welcome, " + user.getName() + ".");
-            userInfo.add(info);
 
             JPanel SearchBarPane = new JPanel();
             JTextField searchBar = new JTextField(50);
@@ -50,20 +45,22 @@ public class MainPage implements ItemListener {
             SearchBarPane.add(options);
             //SearchBarPane.add(rb2);
             //SearchBarPane.add(rb3);
+            card1.add(SearchBarPane);
             JPanel resultsPane = new JPanel();
 
             String[] listContents = {"Placeholder1", "To be populated by media"};
 
-            JList<String> resultList = new JList<String>(listContents);
+            JList<String> resultList = new JList<>(listContents);
             resultsPane.add(resultList);
-            card1.add(SearchBarPane, BorderLayout.PAGE_START);
-            card1.add(resultsPane, BorderLayout.CENTER);
 
-        searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+            card1.add(resultsPane);
 
-            }
+            //Search Button Listener
+            searchButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
         });
         cards.add(card1, MEDIA_CARD);
 
