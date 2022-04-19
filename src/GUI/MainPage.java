@@ -1,6 +1,7 @@
 package GUI;
 
 import DataClasses.LibraryActor;
+import DataClasses.MediaTypes;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -10,12 +11,11 @@ public class MainPage implements ItemListener {
     JPanel cards; //a panel that uses CardLayout
     final static String MEDIA_CARD = "Media Card";
     final static String USER_INFORMATION = "User Information";
-    final static String LIBRARY_MANAGEMENT = "Library Media";
 
     public void addComponentToPane(Container pane, LibraryActor user) {
         //Put the JComboBox in a JPanel to get a nicer look.
         JPanel comboBoxPane = new JPanel(); //use FlowLayout
-        String[] comboBoxItems = {MEDIA_CARD, USER_INFORMATION, LIBRARY_MANAGEMENT };
+        String[] comboBoxItems = {MEDIA_CARD, USER_INFORMATION };
         JComboBox<String> cb = new JComboBox<>(comboBoxItems);
         cb.setEditable(false);
         cb.addItemListener(this);
@@ -24,10 +24,47 @@ public class MainPage implements ItemListener {
         cards = new JPanel(new CardLayout());
         //Create the "cards".
         JPanel card1 = new JPanel();
-            TextField c1_t1 = new TextField();
-            c1_t1.setText("PLACEHOLDER");
-            c1_t1.setEditable(false);
-            card1.add(c1_t1);
+            JPanel userInfo = new JPanel();
+            JLabel info = new JLabel();
+            info.setText("Welcome, " + user.getName() + ".");
+            userInfo.add(info);
+
+            JPanel SearchBarPane = new JPanel();
+            JTextField searchBar = new JTextField(50);
+            searchBar.setText("Enter Title...");
+            JButton searchButton = new JButton();
+            searchButton.setText("Search");
+            JLabel optionsLabel = new JLabel("Search by:");
+            /*JRadioButton rb1 = new JRadioButton("Text");
+            JRadioButton rb2 = new JRadioButton("ISBN");
+            JRadioButton rb3 = new JRadioButton("Media Type");
+            ButtonGroup g = new ButtonGroup();
+            g.add(rb1);
+            g.add(rb2);
+            g.add(rb3);*/
+            String[] searchOptions = {"BOOK", "CD", "ARTICLE", "MICROFILM", "MOVIE"};
+            JComboBox<String> options = new JComboBox<>(searchOptions);
+            SearchBarPane.add(searchBar);
+            SearchBarPane.add(searchButton);
+            SearchBarPane.add(optionsLabel);
+            SearchBarPane.add(options);
+            //SearchBarPane.add(rb2);
+            //SearchBarPane.add(rb3);
+            JPanel resultsPane = new JPanel();
+
+            String[] listContents = {"Placeholder1", "To be populated by media"};
+
+            JList<String> resultList = new JList<String>(listContents);
+            resultsPane.add(resultList);
+            card1.add(SearchBarPane, BorderLayout.PAGE_START);
+            card1.add(resultsPane, BorderLayout.CENTER);
+
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
         cards.add(card1, MEDIA_CARD);
 
         JPanel card2 = new JPanel();
@@ -47,6 +84,8 @@ public class MainPage implements ItemListener {
             card2.add(c3_t3);
         cards.add(card2, USER_INFORMATION);
 
+        //Integrated with MEDIA CARD
+        /*
         JPanel card3 = new JPanel();
             Button c3_b1 = new Button();
             c3_b1.setLabel("Check Out Media");
@@ -58,6 +97,7 @@ public class MainPage implements ItemListener {
                 }
             });
         cards.add(card3, LIBRARY_MANAGEMENT);
+        */
 
 
         pane.add(comboBoxPane, BorderLayout.PAGE_START);
