@@ -38,7 +38,7 @@ public class MainPage implements ItemListener {
             g.add(rb2);
             g.add(rb3);*/
             String[] searchOptions = {"BOOK", "CD", "ARTICLE", "MICROFILM", "MOVIE"};
-            JComboBox<String> options = new JComboBox<>(searchOptions);
+            JComboBox<String> options = new JComboBox<String>(searchOptions);
             SearchBarPane.add(searchBar);
             SearchBarPane.add(searchButton);
             SearchBarPane.add(optionsLabel);
