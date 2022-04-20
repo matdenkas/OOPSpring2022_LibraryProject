@@ -52,7 +52,7 @@ public class MainPage implements ItemListener {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         //Open EditEntries window
-
+                        EditEntries.generateGUI(user);
                     }
                 });
                 SearchBarPane.add(mediaEntryButton);
