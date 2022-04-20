@@ -1,6 +1,7 @@
 package GUI;
 
 import DataClasses.LibraryActor;
+import DataClasses.LibraryEmployee;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -43,6 +44,20 @@ public class MainPage implements ItemListener {
             SearchBarPane.add(searchButton);
             SearchBarPane.add(optionsLabel);
             SearchBarPane.add(options);
+
+            if(user.getClass() == LibraryEmployee.class)
+            {
+                JButton mediaEntryButton = new JButton("Edit Entries");
+                mediaEntryButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        //Open EditEntries window
+
+                    }
+                });
+                SearchBarPane.add(mediaEntryButton);
+            }
+
             //SearchBarPane.add(rb2);
             //SearchBarPane.add(rb3);
             card1.add(SearchBarPane);
