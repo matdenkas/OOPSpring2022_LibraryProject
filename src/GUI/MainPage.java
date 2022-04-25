@@ -55,7 +55,16 @@ public class MainPage implements ItemListener {
                         EditEntries.generateGUI(user);
                     }
                 });
+                JButton manageClients = new JButton("Manage Clients");
+                manageClients.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        //Open Manage Clients Window
+                        ManageClients.generateGUI(user);
+                    }
+                });
                 SearchBarPane.add(mediaEntryButton);
+                SearchBarPane.add(manageClients);
             }
 
             //SearchBarPane.add(rb2);

@@ -28,6 +28,7 @@ public class EditEntries {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Add Entry Wizard Call
+                AddEntry.generateGUI(user);
             }
         });
         mediaSearchPane.add(searchBox);
@@ -37,7 +38,9 @@ public class EditEntries {
         //Entries List Panel
         JPanel resultsPane = new JPanel();
         JList<String> entriesList = new JList<>();
+        JButton deleteEntry = new JButton("Delete Entry");
         resultsPane.add(entriesList);
+        resultsPane.add(deleteEntry);
 
 
         //Action Buttons (Edit/Delete)

@@ -6,8 +6,8 @@ package AppDriver;
     //TODO::search method
 
 //TODO::Build normal page
-    //TODO::Window to see MediaEntries and check out
-    //TODO::Window to add mediaEntries/remove (if employee)
+    //TODO::Window to see MediaEntries and check out/
+    //TODO::Window to add mediaEntries/remove (if employee)/
     //TODO::Window to manage clients
 
 //TODO::Build the application Driver
