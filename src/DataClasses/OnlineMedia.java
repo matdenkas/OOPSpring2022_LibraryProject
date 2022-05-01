@@ -3,14 +3,13 @@ package DataClasses;
 public class OnlineMedia extends MediaEntry {
     private final String link;
     private final MediaTypes type;
-    private final String name;
 
-    OnlineMedia(int id, String isbn, String link, MediaTypes type, String name) {
+    public OnlineMedia(int id, String isbn, String link, MediaTypes type, String name) {
         super.id = id;
         super.isbn = isbn;
+        super.name = name;
         this.link = link;
         this.type = type;
-        this.name = name;
     }
 
     public String getLink() {
@@ -19,9 +18,5 @@ public class OnlineMedia extends MediaEntry {
 
     public MediaTypes getType() {
         return type;
-    }
-
-    public String getName() {
-        return name;
     }
 }

@@ -12,6 +12,8 @@ package AppDriver;
 
 //TODO::Build the application Driver
     //TODO::hard coded data
+import DataControlers.CatalogRefrence;
+import DataControlers.MediaCatalogHandler;
 import DataControlers.UserAuthHandler;
 import GUI.*;
 import DataClasses.*;
@@ -22,6 +24,7 @@ public class ApplicationDriver {
 
     private static UserAuthHandler userAuthHandler;
     private static LoginPage loginPage;
+    private static CatalogRefrence catalogRefrence;
     public static void main(String[] args) {
         int idRoot = 0;
         userAuthHandler = new UserAuthHandler();
@@ -29,6 +32,12 @@ public class ApplicationDriver {
         LibraryClient lc = new LibraryClient(idRoot++, "John", "qwe", "rty", "4312 address", 6);
         userAuthHandler.addUser(le);
         userAuthHandler.addUser(lc);
+
+        catalogRefrence = new MediaCatalogHandler();
+        OnlineMedia om = new OnlineMedia(idRoot++, "12345", "HTTPS://realTrustworthySite.com", MediaTypes.ARTICLE, "Why this group should get an A");
+        OnSiteMedia osm = new OnSiteMedia(idRoot++, "A10304", "AB12.1", MediaTypes.BOOK, "500 Reasons How This Group Did an Awesome Job");
+        catalogRefrence.addMedia(om);
+        catalogRefrence.addMedia(osm);
 
         loginPage = new LoginPage();
         loginPage.setVisible(true);
@@ -40,7 +49,7 @@ public class ApplicationDriver {
             loginPage.setVisible(false);
             loginPage.dispose();
 
-            MainPage.createAndShowGUI(testUser);
+            MainPage mp = new MainPage(catalogRefrence, testUser);
         }
     }
 }

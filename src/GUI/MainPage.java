@@ -2,6 +2,7 @@ package GUI;
 
 import DataClasses.LibraryActor;
 import DataClasses.LibraryEmployee;
+import DataControlers.CatalogRefrence;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -9,10 +10,28 @@ import javax.swing.*;
 
 public class MainPage implements ItemListener {
     JPanel cards; //a panel that uses CardLayout
+    private CatalogRefrence catalogRefrence;
+    private LibraryActor user;
     final static String MEDIA_CARD = "Library Media";
     final static String USER_INFORMATION = "User Information";
 
-    public void addComponentToPane(Container pane, LibraryActor user) {
+    public MainPage(CatalogRefrence catalog, LibraryActor user) {
+        this.catalogRefrence = catalog;
+        this.user = user;
+
+        //Create and set up the window.
+        JFrame frame = new JFrame("Main Page");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+
+        buildOnFrame(frame.getContentPane());
+
+        //Display the window.
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    public void buildOnFrame(Container pane) {
         //Put the JComboBox in a JPanel to get a nicer look.
         JPanel comboBoxPane = new JPanel(); //use FlowLayout
         String[] comboBoxItems = {MEDIA_CARD, USER_INFORMATION };
@@ -72,9 +91,12 @@ public class MainPage implements ItemListener {
             card1.add(SearchBarPane);
             JPanel resultsPane = new JPanel();
 
-            String[] listContents = {"Placeholder1", "To be populated by media"};
-
-            JList<String> resultList = new JList<>(listContents);
+            JPanel[] panels = catalogRefrence.getAllMediaItems();
+            JPanel resultList = new JPanel();
+            resultList.setLayout(new BoxLayout(resultList, BoxLayout.PAGE_AXIS));
+            for(JPanel panel : panels){
+                resultList.add(panel);
+            }
             resultsPane.add(resultList);
 
             card1.add(resultsPane);
@@ -128,20 +150,5 @@ public class MainPage implements ItemListener {
     public void itemStateChanged(ItemEvent evt) {
         CardLayout cl = (CardLayout)(cards.getLayout());
         cl.show(cards, (String)evt.getItem());
-    }
-
-
-    public static void createAndShowGUI(LibraryActor user) {
-        //Create and set up the window.
-        JFrame frame = new JFrame("Main Page");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        //Create and set up the content pane.
-        MainPage demo = new MainPage();
-        demo.addComponentToPane(frame.getContentPane(), user);
-
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);
     }
 }
