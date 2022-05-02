@@ -2,64 +2,92 @@ package GUI;
 
 
 import DataClasses.LibraryActor;
-import DataClasses.LibraryEmployee;
+import AppDriver.ApplicationDriver;
+import DataControlers.CatalogRefrence;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static AppDriver.ApplicationDriver.getCatalogRefrence;
+
 public class EditEntries {
 
-    public void addComponentToPane(Container pane, LibraryActor user) {
-        //Search Panel
-        JPanel mediaSearchPane = new JPanel();
-        JTextField searchBox = new JTextField(50);
-        searchBox.setText("Enter Title");
-        JButton executeSearch = new JButton("Search");
-        JButton addEntryButton = new JButton("Add Media Entry...");
-        executeSearch.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //Search method call
-            }
-        });
-        addEntryButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //Add Entry Wizard Call
-                AddEntry.generateGUI(user);
-            }
-        });
-        mediaSearchPane.add(searchBox);
-        mediaSearchPane.add(executeSearch);
-        mediaSearchPane.add(addEntryButton);
+    private JTextField searchBox;
+    private JPanel selected;
+    private JFrame saveFrame;
+    private ActionListener buttonHandler;
 
-        //Entries List Panel
-        JPanel resultsPane = new JPanel();
-        JList<String> entriesList = new JList<>();
-        JButton deleteEntry = new JButton("Delete Entry");
-        resultsPane.add(entriesList);
-        resultsPane.add(deleteEntry);
-
-
-        //Action Buttons (Edit/Delete)
-        pane.add(mediaSearchPane, BorderLayout.NORTH);
-        pane.add(resultsPane, BorderLayout.CENTER);
-    }
-
-    public static void generateGUI(LibraryActor user) {
+    public EditEntries(LibraryActor user) {
         //Create and set up the window.
         JFrame frame = new JFrame("Edit Media Entries");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        //Create and set up the content pane.
-        EditEntries window = new EditEntries();
-        window.addComponentToPane(frame.getContentPane(), user);
+        //init button handler
+        buttonHandler = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CatalogRefrence cr = getCatalogRefrence();
+                switch (e.getActionCommand()) {
+                    case "Search":
+                        saveFrame.getContentPane().remove(selected);
+                        JPanel entryPanel = cr.medeaItemSearch(searchBox.getText());
+
+                        selected = new JPanel();
+                        if(entryPanel != null) {
+                            selected.add(entryPanel);
+                            JButton delete = new JButton("Delete");
+                            delete.addActionListener(buttonHandler);
+                            selected.add(delete);
+                        }
+                        else {
+                            JTextField text = new JTextField();
+                            text.setText("Search not found");
+                            text.setEditable(false);
+                            text.setForeground(Color.RED);
+                            selected.add(text);
+                        }
+                        saveFrame.add(selected);
+                        saveFrame.revalidate();
+                        break;
+                    case "Add Media Entry...":
+                        AddEntry.generateGUI(user);
+                        break;
+                    case "Delete":
+                        cr.deleteItemByTitle(searchBox.getText());
+                        break;
+                }
+            }
+        };
+
+        addComponentToPane(frame.getContentPane(), user);
 
         //Display the window.
         frame.pack();
         frame.setVisible(true);
+        saveFrame = frame;
     }
 
+    public void addComponentToPane(Container pane, LibraryActor user) {
+
+        //Search Panel
+        JPanel mediaSearchPane = new JPanel();
+        searchBox = new JTextField(50);
+        searchBox.setText("Enter Title");
+        JButton executeSearch = new JButton("Search");
+        executeSearch.addActionListener(buttonHandler);
+
+        JButton addEntryButton = new JButton("Add Media Entry...");
+        addEntryButton.addActionListener(buttonHandler);
+
+        mediaSearchPane.add(searchBox);
+        mediaSearchPane.add(executeSearch);
+        mediaSearchPane.add(addEntryButton);
+
+        //Action Buttons (Edit/Delete)
+        pane.add(mediaSearchPane, BorderLayout.NORTH);
+        selected = new JPanel();
+        pane.add(selected);
+    }
 }

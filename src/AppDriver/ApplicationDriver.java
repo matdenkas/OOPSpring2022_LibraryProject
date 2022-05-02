@@ -1,7 +1,4 @@
 package AppDriver;
-//TODO::Create data handler class for all Media Entries
-    //TODO::search method
-
 //TODO::Create data handler class for all LibraryActors
     //TODO::search method
 
@@ -10,23 +7,22 @@ package AppDriver;
     //TODO::Window to add mediaEntries/remove (if employee)/
     //TODO::Window to manage clients
 
-//TODO::Build the application Driver
-    //TODO::hard coded data
+
 import DataControlers.CatalogRefrence;
 import DataControlers.MediaCatalogHandler;
 import DataControlers.UserAuthHandler;
 import GUI.*;
 import DataClasses.*;
 
-import javax.swing.*;
-
 public class ApplicationDriver {
 
     private static UserAuthHandler userAuthHandler;
     private static LoginPage loginPage;
     private static CatalogRefrence catalogRefrence;
+    private static int idRoot;
+
     public static void main(String[] args) {
-        int idRoot = 0;
+        idRoot = 0;
         userAuthHandler = new UserAuthHandler();
         LibraryEmployee le = new LibraryEmployee(idRoot++, "Mark", "abc", "123", "1234 address town", 12.99);
         LibraryClient lc = new LibraryClient(idRoot++, "John", "qwe", "rty", "4312 address", 6);
@@ -49,9 +45,15 @@ public class ApplicationDriver {
             loginPage.setVisible(false);
             loginPage.dispose();
 
-            MainPage mp = new MainPage(catalogRefrence, testUser);
+            new MainPage(catalogRefrence, testUser);
         }
     }
+
+    public static CatalogRefrence getCatalogRefrence() {
+        return catalogRefrence;
+    }
+
+    public static int getIdNum() { return idRoot++; }
 }
 
 

@@ -3,12 +3,9 @@ package DataControlers;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.NoSuchElementException;
 
 import DataClasses.*;
-import org.w3c.dom.Text;
 
-import javax.naming.Name;
 import javax.swing.*;
 
 public class MediaCatalogHandler implements CatalogRefrence {
@@ -70,10 +67,9 @@ public class MediaCatalogHandler implements CatalogRefrence {
     public JPanel getMediaItem(String title) {
         MediaEntry entry = mediaEntries.get(title);
         if(entry != null) {
-            JPanel panel = createMediaEntryPanel(entry);
-            return panel;
-        }
-        else throw new RuntimeException("NoSuchElementException");
+            return createMediaEntryPanel(entry);
+         }
+        else return null;
     }
 
     @Override
@@ -86,8 +82,12 @@ public class MediaCatalogHandler implements CatalogRefrence {
     }
 
     @Override
-    public JPanel[] medeaItemSearch(String title) {
-        return new JPanel[0];
+    public JPanel medeaItemSearch(String title) {
+        MediaEntry entry = mediaEntries.get(title);
+        if(entry != null) {
+            return createMediaEntryPanel(entry);
+        }
+        else return null;
     }
 
     @Override
@@ -97,5 +97,11 @@ public class MediaCatalogHandler implements CatalogRefrence {
             mediaEntries.put(title, newMedia);
             titleList.add(title);
         }
+    }
+
+    @Override
+    public void deleteItemByTitle(String title){
+        titleList.remove(title);
+        mediaEntries.remove(title);
     }
 }

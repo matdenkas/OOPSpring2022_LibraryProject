@@ -1,6 +1,10 @@
 package GUI;
 
+import AppDriver.ApplicationDriver;
 import DataClasses.LibraryActor;
+import DataClasses.MediaTypes;
+import DataClasses.OnSiteMedia;
+import DataClasses.OnlineMedia;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,40 +13,77 @@ import java.awt.event.ActionListener;
 
 public class AddEntry {
 
+    private JTextField titleBox;
+    private JTextField isbnBox;
+    private JTextField llFeild;
+    private JComboBox<String> typeCB;
+    private JCheckBox isOnlineCheckBox;
+
     public void addComponentToPane(Container pane, LibraryActor user) {
         //Search Panel
         JPanel addMedia = new JPanel();
         JLabel title = new JLabel("Title:");
-        JTextField titleBox = new JTextField(30);
+        titleBox = new JTextField(30);
         JLabel isbn = new JLabel("ISBN:");
-        JTextField isbnBox = new JTextField(30);
+        isbnBox = new JTextField(15);
+        JLabel ll = new JLabel("Link/Location:");
+        llFeild = new JTextField(15);
         JLabel type = new JLabel("Media Type");
 
-        JRadioButton bookOption = new JRadioButton("Book");
-        JRadioButton cdOption = new JRadioButton("CD");
-        JRadioButton articleOption = new JRadioButton("Article");
-        JRadioButton microOption = new JRadioButton("Micro Film");
-        JRadioButton movieOption = new JRadioButton("Movie");
-        ButtonGroup optionSelect = new ButtonGroup();
-        optionSelect.add(bookOption);
-        optionSelect.add(cdOption);
-        optionSelect.add(articleOption);
-        optionSelect.add(microOption);
-        optionSelect.add(movieOption);
+        String[] comboBoxItems = {
+                MediaTypes.BOOK.name(),
+                MediaTypes.CD.name(),
+                MediaTypes.ARTICLE.name(),
+                MediaTypes.MICROFILM.name(),
+                MediaTypes.MOVIE.name()
+        };
+        typeCB = new JComboBox<>(comboBoxItems);
+        typeCB.setEditable(false);
+
+        isOnlineCheckBox = new JCheckBox("IsOnline");
+        isOnlineCheckBox.setBounds(100,100, 50,50);
+
 
         addMedia.add(title);
         addMedia.add(titleBox);
         addMedia.add(isbn);
         addMedia.add(isbnBox);
+        addMedia.add(ll);
+        addMedia.add(llFeild);
         addMedia.add(type);
-        addMedia.add(bookOption);
-        addMedia.add(cdOption);
-        addMedia.add(articleOption);
-        addMedia.add(microOption);
-        addMedia.add(movieOption);
+        addMedia.add(typeCB);
+        addMedia.add(isOnlineCheckBox);
 
         JPanel addButtonPanel = new JPanel();
         JButton addButton = new JButton("Add Entry");
+
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(isOnlineCheckBox.isSelected()){
+                    ApplicationDriver.getCatalogRefrence().addMedia(
+                            new OnlineMedia(
+                                    ApplicationDriver.getIdNum(),
+                                    isbnBox.getText(),
+                                    llFeild.getText(),
+                                    MediaTypes.valueOf(typeCB.getSelectedItem().toString()),
+                                    titleBox.getText()
+                            )
+                    );
+                }
+                else {
+                    ApplicationDriver.getCatalogRefrence().addMedia(
+                            new OnSiteMedia(
+                                    ApplicationDriver.getIdNum(),
+                                    isbnBox.getText(),
+                                    llFeild.getText(),
+                                    MediaTypes.valueOf(typeCB.getSelectedItem().toString()),
+                                    titleBox.getText()
+                            )
+                    );
+                }
+            }
+        });
 
         addButtonPanel.add(addButton);
 
