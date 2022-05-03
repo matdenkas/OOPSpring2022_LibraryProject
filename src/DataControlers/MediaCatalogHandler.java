@@ -62,16 +62,6 @@ public class MediaCatalogHandler implements CatalogRefrence {
         return panel;
     }
 
-
-    @Override
-    public JPanel getMediaItem(String title) {
-        MediaEntry entry = mediaEntries.get(title);
-        if(entry != null) {
-            return createMediaEntryPanel(entry);
-         }
-        else return null;
-    }
-
     @Override
     public JPanel[] getAllMediaItems() {
         JPanel[] panels = new JPanel[titleList.size()];

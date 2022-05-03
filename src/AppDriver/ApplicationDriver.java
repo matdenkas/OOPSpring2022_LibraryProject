@@ -54,6 +54,8 @@ public class ApplicationDriver {
     }
 
     public static int getIdNum() { return idRoot++; }
+
+    public static UserAuthHandler getUserAuthHandler() { return userAuthHandler; }
 }
 
 

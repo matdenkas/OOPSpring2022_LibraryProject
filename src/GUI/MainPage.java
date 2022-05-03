@@ -6,7 +6,6 @@ import DataControlers.CatalogRefrence;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Arrays;
 import javax.swing.*;
 
 public class MainPage implements ItemListener {
@@ -18,6 +17,7 @@ public class MainPage implements ItemListener {
     private JTextField executeSearch;
     private JFrame saveFrame;
     private JPanel resultsPane;
+    private JPanel card1;
 
     public MainPage(CatalogRefrence catalog, LibraryActor user) {
         this.catalogRefrence = catalog;
@@ -47,7 +47,7 @@ public class MainPage implements ItemListener {
 
         cards = new JPanel(new CardLayout());
         //Create the "cards".
-        JPanel card1 = new JPanel();
+        card1 = new JPanel();
 
             JPanel SearchBarPane = new JPanel();
             JTextField searchBar = new JTextField(50);
@@ -68,16 +68,7 @@ public class MainPage implements ItemListener {
                         new EditEntries(user);
                     }
                 });
-                JButton manageClients = new JButton("Manage Clients");
-                manageClients.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        //Open Manage Clients Window
-                        ManageClients.generateGUI(user);
-                    }
-                });
                 SearchBarPane.add(mediaEntryButton);
-                SearchBarPane.add(manageClients);
             }
 
             card1.add(SearchBarPane);
@@ -85,31 +76,16 @@ public class MainPage implements ItemListener {
             refreshButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    saveFrame.getContentPane().remove(resultsPane);
-                    JPanel[] panels = catalogRefrence.getAllMediaItems();
-                    System.out.println(panels.length);
-                    JPanel resultsPane = new JPanel();
-                    resultsPane.setLayout(new BoxLayout(resultsPane, BoxLayout.PAGE_AXIS));
-                    for(JPanel panel : panels){
-                        resultsPane.add(panel);
-                    }
-                    saveFrame.add(resultsPane);
-                    saveFrame.revalidate();
-                    System.out.println("Beeeep");
+                    //rebuilt the catalog list
+                    card1.remove(resultsPane);
+                    card1.add(getCatalogPanel());
+                    card1.revalidate();
                 }
             });
             card1.add(refreshButton);
-            resultsPane = new JPanel();
 
-            JPanel[] panels = catalogRefrence.getAllMediaItems();
-            JPanel resultList = new JPanel();
-            resultList.setLayout(new BoxLayout(resultList, BoxLayout.PAGE_AXIS));
-            for(JPanel panel : panels){
-                resultList.add(panel);
-            }
-            resultsPane.add(resultList);
-
-            card1.add(resultsPane);
+            //add the catalog of items, the list
+            card1.add(getCatalogPanel());
 
             //Search Button Listener
             searchButton.addActionListener(new ActionListener() {
@@ -125,6 +101,17 @@ public class MainPage implements ItemListener {
         cards.add(card1, MEDIA_CARD);
 
         JPanel card2 = new JPanel();
+
+            JButton manageClients = new JButton("Manage Clients");
+            manageClients.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    //Open Manage Clients Window
+                    AddNewUser.generateGUI(user);
+                }
+            });
+            card2.add(manageClients);
+
             TextField c2_t1 = new TextField();
             c2_t1.setText("Name: " + user.getName());
             c2_t1.setEditable(false);
@@ -135,27 +122,11 @@ public class MainPage implements ItemListener {
             c2_t2.setEditable(false);
             card2.add(c2_t2);
 
-            TextField c3_t3 = new TextField();
-            c3_t3.setText("Name: " + user.getPassword());
-            c3_t3.setEditable(false);
-            card2.add(c3_t3);
+            TextField c2_t3 = new TextField();
+            c2_t3.setText("Name: " + user.getPassword());
+            c2_t3.setEditable(false);
+            card2.add(c2_t3);
         cards.add(card2, USER_INFORMATION);
-
-        //Integrated with MEDIA CARD
-        /*
-        JPanel card3 = new JPanel();
-            Button c3_b1 = new Button();
-            c3_b1.setLabel("Check Out Media");
-            card3.add(c3_b1);
-            c3_b1.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                        CheckoutPage.createAndShowGUI(user);
-                }
-            });
-        cards.add(card3, LIBRARY_MANAGEMENT);
-        */
-
 
         pane.add(comboBoxPane, BorderLayout.PAGE_START);
         pane.add(cards, BorderLayout.CENTER);
@@ -164,5 +135,17 @@ public class MainPage implements ItemListener {
     public void itemStateChanged(ItemEvent evt) {
         CardLayout cl = (CardLayout)(cards.getLayout());
         cl.show(cards, (String)evt.getItem());
+    }
+
+    private JPanel getCatalogPanel() {
+        resultsPane = new JPanel();
+        JPanel[] panels = catalogRefrence.getAllMediaItems();
+        JPanel resultList = new JPanel();
+        resultList.setLayout(new BoxLayout(resultList, BoxLayout.PAGE_AXIS));
+        for(JPanel panel : panels){
+            resultList.add(panel);
+        }
+        resultsPane.add(resultList);
+        return resultsPane;
     }
 }
