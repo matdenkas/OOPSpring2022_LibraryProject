@@ -102,15 +102,18 @@ public class MainPage implements ItemListener {
 
         JPanel card2 = new JPanel();
 
-            JButton manageClients = new JButton("Manage Clients");
-            manageClients.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    //Open Manage Clients Window
-                    AddNewUser.generateGUI(user);
-                }
-            });
-            card2.add(manageClients);
+            if(user.getClass() == LibraryEmployee.class)
+            {
+                JButton manageClients = new JButton("Manage Clients");
+                manageClients.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        //Open Manage Clients Window
+                        AddNewUser.generateGUI(user);
+                    }
+                });
+                card2.add(manageClients);
+            }
 
             TextField c2_t1 = new TextField();
             c2_t1.setText("Name: " + user.getName());
