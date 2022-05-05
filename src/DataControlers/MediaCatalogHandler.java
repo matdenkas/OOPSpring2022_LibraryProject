@@ -8,16 +8,26 @@ import DataClasses.*;
 
 import javax.swing.*;
 
+//Class manages all the media items in the library
 public class MediaCatalogHandler implements CatalogRefrence {
 
-    private HashMap<String, MediaEntry> mediaEntries;
-    private ArrayList<String> titleList;
 
+    private HashMap<String, MediaEntry> mediaEntries;    //HM of titles to media entries
+    private ArrayList<String> titleList;    //List of every title known
+
+    /**
+     * Default constructer inits the hasmap and list
+     */
     public MediaCatalogHandler() {
         mediaEntries = new HashMap<>();
         titleList = new ArrayList<>();
     }
 
+    /**
+     * Takes a entry and makes a gui panel of it
+     * @param entry
+     * @return
+     */
     private JPanel createMediaEntryPanel(MediaEntry entry) {
         JPanel panel = new JPanel();
 
@@ -62,6 +72,7 @@ public class MediaCatalogHandler implements CatalogRefrence {
         return panel;
     }
 
+    //catalog refrence deffinitions
     @Override
     public JPanel[] getAllMediaItems() {
         JPanel[] panels = new JPanel[titleList.size()];
